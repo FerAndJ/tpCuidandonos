@@ -1,0 +1,78 @@
+@startuml Cuidandonos
+
+
+Class Transeunte {
+    -datos : Datos
+    -direccionActual : Direccion
+    -tipoUsuario : UsuarioActivo
+    -cuidadores : Cuidador..
+    +solicitudViaje(Direccion destino, Cuidador.. cuidador) : Cuidador..
+    +notificarCuidadores()
+    +confirmarViaje()
+   +informarTiempo()
+
+
+    
+}
+
+Class Cuidador {
+    -datos : Datos
+    -usuarioPasivo : Boolean
+    -tipoUsuario : UsuarioPasivo
+    +aceptarCuidado(Transeunte transeunte) : Boolean
+}
+
+Class Datos {
+    -nombre : String
+    -apellido : String
+    -direccion : String
+    -edad: Integer
+    -Sexo : String
+}
+
+Transeunte *-- Datos
+Cuidador *-- Datos
+
+
+Interface Usuario {
+    consultar()
+    solicitar()
+    confirmar()
+    tiempoViaje() : Integer
+}
+
+Class UsuarioPasivo {
+    consultar()
+    confirmar()
+}
+
+Class UsuarioActivo {
+    -distanciaCalculada : Distancia
+    consultar()
+    solicitar()
+    confirmar()
+    tiempoViaje() : Integer
+    
+}
+
+Usuario <|.. UsuarioPasivo
+Usuario <|.. UsuarioActivo
+
+Transeunte *-- UsuarioActivo
+Cuidador *-- UsuarioPasivo
+
+Class AdapterDistancias {
+    calculoDistancia(Direccion d1, Direccion d2, Medida medida) : Distancia
+}
+
+UsuarioActivo --> AdapterDistancias
+
+Enum Medida {
+    Metros
+    Kilometros
+    Duracion
+}
+
+AdapterDistancias *-- Medida
+
+@enduml

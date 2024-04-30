@@ -1,0 +1,37 @@
+Dado el enunciado de final titulado "Cuidándonos", cuya fecha data el 27/02/2019 (lo encontrarán dentro del link "Finales & clases de consulta" que está dentro de los "Links oficiales de la Cátedra"), deberán resolver de a pares el punto de Modelado de Dominio (punto 1 y punto 2 de la sección Modelo de Dominio). 
+
+Forma de entrega:
+
+Se espera que se envíe un link a un repositorio público que contenga el Diagrama de clases propuesto y todo lo que se considere necesario/lo que solicite el dominio. 
+Ambos integrantes del par deberán entregar la tarea, mencionando en el readme quiénes son los integrantes.
+
+
+Decisiones de diseño
+
+1) Como no se menciona que un transeunte puede pasar a ser cuidador o viceversa decidimos crearla en dos clases separadas con atributos e interfaces comunes,
+como pueden ser los datos, y un tipo de usuario asociado.
+
+2)Este tipo de usuario sera una interfaz con implementaciones distintas donde el transeunte confirmara viajes y consultara cuidadores cercanos, y el cuidador
+confirmara hacerse cargo de un viaje y confirmarar solicitudes que pueden llegar de transeuntes. Esto lo podemos pensar como un Patron Strategy, donde los
+distintos tipos de usuarios consultaran a una misma interfaz, pero con metodos distintos los que nos permite una mayor modularidad.
+
+
+
+Consideraciones:
+
+1)La notacion 'Cuidador...' se refiere a que este puede ser un solo cuidador, o una lisa de cuidadores.
+
+2)solicitudViaje(Destino destino, Cuidador..) usara internamente al atributo de direccion del transeunte, dentro del metodo se pasaran por parametros los 
+cuidadores que desee el usuario y hara uso de la interfaz de usuario con el metodo consultar() para obtener los cuidades disponibles segun los disponibles
+teniendo en cuenta quienes acepten o no.
+
+3)notificarCuidadores() notificara a los cuidadores mediante la interfaz de tipo de usuario, por medio del metodo solicitar,
+lo cual disparara la accion de que la aplicacion notifique a un cuidador que un transeunte desea que sea su cuidador.
+
+4)aceptarCuidado(Transeunte) este metodo del cuidador se utilizara (por  medio del metodo confirmar()) luego de  que se reciba dicha de solicitud de un transeunte y el cuidador la acepte. Los cuidades que acepten seran guardados dentro del atributo del transeunte "cuidadores"
+
+
+5)Una vez que el o los cuidadores confirmen el viaje, el transeunte o usuario activo hara uso del mismo metodo de confirmar() pero para iniciar el viaje solicitado, donde dentro de este metodo confirmar() , sobre escrito en la clase de usuario activo. Se hara uso del metodo tiempoDeViaje() de la interfaz,
+que devolvera la duracion de tiempo  y luego se utilizara este Integer dentro de un metodo informarTiempo() el cual informara dicho tiempo
+a los cuidadores del transeunte (dentro del cuerpo de este metodo, se utilizara una funcion de orden superior para notificar a cada uno de los
+cuidadores de la lista atributo del transeunte..
