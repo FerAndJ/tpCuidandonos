@@ -1,7 +1,7 @@
 # tpCuidandonos
 
 Integrantes:
-  Fernando Juncos
+  Fernando Juncos, 
   Alexia Deza
 
 Punto 2: Pseudo código de calculo de tiempo
